@@ -6,7 +6,7 @@ import { formatDate } from '../../utils/format-date.js';
 /**
  * GuestbookList 컴포넌트
  *
- * 방명록 목록을 한 줄씩 보여줍니다. 항목을 누르면 상세 화면으로 이동합니다.
+ * 방명록 목록을 한 줄씩 보여줍니다. (제목만 노출) 항목을 누르면 상세 화면으로 이동합니다.
  *
  * Props:
  * @param {Array} entries - 방명록 목록 [Required]
@@ -56,7 +56,7 @@ function GuestbookList({ entries, onSelect }) {
                   whiteSpace: 'nowrap',
                 }}
               >
-                {entry.message}
+                {entry.title}
               </Box>
               <Box sx={{ mt: 0.5, color: 'var(--color-text-muted)', fontSize: '0.8rem' }}>
                 {`${entry.display_name} · ${formatDate(entry.created_at)}`}

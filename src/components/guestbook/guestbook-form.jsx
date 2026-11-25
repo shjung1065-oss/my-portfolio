@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 
 import { createGuestbookEntry } from '../../utils/guestbook-api.js';
 
-const EMPTY_FORM = { name: '', phone: '', email: '', affiliation: '', message: '' };
+const EMPTY_FORM = { name: '', phone: '', email: '', affiliation: '', title: '', message: '' };
 const EMAIL_PATTERN = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 const PHONE_PATTERN = /^[0-9-]{9,13}$/;
 
@@ -19,7 +19,7 @@ const fieldSx = {
 /**
  * GuestbookForm 컴포넌트
  *
- * 방명록 작성 폼입니다. 이름과 메시지는 필수, 이메일(비공개)과 소속은 선택입니다.
+ * 방명록 작성 폼입니다. 이름 · 제목 · 내용은 필수, 소속 · 전화번호 · 이메일은 선택(비공개)입니다.
  *
  * Props:
  * @param {function} onCreated - 작성 성공 후 호출되는 함수 [Optional]
@@ -34,7 +34,7 @@ function GuestbookForm({ onCreated }) {
 
   const isEmailInvalid = form.email.trim() !== '' && !EMAIL_PATTERN.test(form.email.trim());
   const isPhoneInvalid = form.phone.trim() !== '' && !PHONE_PATTERN.test(form.phone.trim());
-  const canSubmit = form.name.trim() && form.message.trim() && !isEmailInvalid && !isPhoneInvalid && !isSubmitting;
+  const canSubmit = form.name.trim() && form.title.trim() && form.message.trim() && !isEmailInvalid && !isPhoneInvalid && !isSubmitting;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -115,7 +115,18 @@ function GuestbookForm({ onCreated }) {
         소속/직업, 전화번호, 이메일은 공개되지 않아요. 사이트 주인만 확인하고, 답장이 필요할 때 연락드려요.
       </Box>
       <TextField
-        label="남기실 말"
+        label="제목"
+        name="title"
+        value={ form.title }
+        onChange={ handleChange }
+        required
+        fullWidth
+        slotProps={{ htmlInput: { maxLength: 50 } }}
+        helperText="목록에는 제목만 보여요"
+        sx={ fieldSx }
+      />
+      <TextField
+        label="내용"
         name="message"
         value={ form.message }
         onChange={ handleChange }

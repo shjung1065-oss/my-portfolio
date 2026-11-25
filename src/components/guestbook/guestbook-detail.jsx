@@ -76,7 +76,22 @@ function GuestbookDetail({ entryId, onNavigate, onBack }) {
               borderBottom: '1px solid var(--color-ivory-line)',
             }}
           >
-            <Box sx={{ color: 'var(--color-text-primary)', fontWeight: 700, fontSize: '1.05rem' }}>
+            <Box
+              component="h3"
+              sx={{
+                width: '100%',
+                m: 0,
+                mb: 0.5,
+                color: 'var(--color-text-primary)',
+                fontWeight: 700,
+                fontSize: { xs: '1.15rem', md: '1.3rem' },
+                lineHeight: 1.4,
+                wordBreak: 'break-word',
+              }}
+            >
+              {entry.title}
+            </Box>
+            <Box sx={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>
               {entry.display_name}
             </Box>
             <Box sx={{ ml: 'auto', color: 'var(--color-text-muted)', fontSize: '0.85rem' }}>

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Pagination from '@mui/material/Pagination';
 
 import GuestbookDetail from './guestbook-detail.jsx';
@@ -107,7 +108,18 @@ function GuestbookBoard() {
           <GuestbookSearch key={ keyword } initialKeyword={ keyword } onSearch={ handleSearch } />
         </Box>
 
-        {listState.hasError && <Alert severity="error">방명록을 불러오지 못했어요.</Alert>}
+        {listState.hasError && (
+          <Alert
+            severity="error"
+            action={
+              <Button color="inherit" size="small" onClick={ () => setReloadKey((key) => key + 1) }>
+                다시 시도
+              </Button>
+            }
+          >
+            방명록을 불러오지 못했어요. 계속 안 되면 새로고침(Ctrl+F5)해 주세요.
+          </Alert>
+        )}
 
         {!listState.hasError && !listState.isLoading && listState.entries.length === 0 && (
           <Box sx={{ py: 5, textAlign: 'center', color: 'var(--color-text-muted)', fontSize: '0.95rem' }}>
