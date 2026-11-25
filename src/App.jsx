@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
 import NavigationBar from './components/common/navigation-bar.jsx';
+import SiteFooter from './components/common/site-footer.jsx';
 import HomePage from './pages/home-page.jsx';
 import AboutPage from './pages/about-page.jsx';
 import ProjectsPage from './pages/projects-page.jsx';
@@ -32,6 +33,8 @@ function App() {
           </Routes>
         </Container>
       </Box>
+
+      <SiteFooter />
     </Box>
   );
 }

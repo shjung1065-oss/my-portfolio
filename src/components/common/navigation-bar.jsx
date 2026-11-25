@@ -2,6 +2,8 @@ import { NavLink } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
+import SnsLinks from './sns-links.jsx';
+
 const NAV_ITEMS = [
   { label: 'Home', to: '/' },
   { label: 'About Me', to: '/about' },
@@ -59,36 +61,42 @@ function NavigationBar() {
           </Box>
         </Box>
 
-        <Box component="ul" sx={{ display: 'flex', gap: { xs: 0.5, sm: 1 }, listStyle: 'none', m: 0, p: 0 }}>
-          {NAV_ITEMS.map((item) => (
-            <Box component="li" key={ item.to }>
-              <Box
-                component={ NavLink }
-                to={ item.to }
-                end={ item.to === '/' }
-                sx={{
-                  display: 'block',
-                  px: { xs: 1, sm: 1.5 },
-                  py: 1,
-                  color: 'rgba(255, 255, 255, 0.75)',
-                  fontSize: { xs: '0.875rem', md: '1rem' },
-                  fontWeight: 500,
-                  textDecoration: 'none',
-                  whiteSpace: 'nowrap',
-                  borderBottom: '3px solid transparent',
-                  transition: 'color 0.2s ease, border-color 0.2s ease',
-                  '&:hover': { color: '#FFFFFF' },
-                  '&.active': {
-                    color: '#FFFFFF',
-                    fontWeight: 700,
-                    borderBottomColor: 'var(--color-primary)',
-                  },
-                }}
-              >
-                {item.label}
+        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+          <Box component="ul" sx={{ display: 'flex', gap: { xs: 0.5, sm: 1 }, listStyle: 'none', m: 0, p: 0 }}>
+            {NAV_ITEMS.map((item) => (
+              <Box component="li" key={ item.to }>
+                <Box
+                  component={ NavLink }
+                  to={ item.to }
+                  end={ item.to === '/' }
+                  sx={{
+                    display: 'block',
+                    px: { xs: 1, sm: 1.5 },
+                    py: 1,
+                    color: 'rgba(255, 255, 255, 0.75)',
+                    fontSize: { xs: '0.875rem', md: '1rem' },
+                    fontWeight: 500,
+                    textDecoration: 'none',
+                    whiteSpace: 'nowrap',
+                    borderBottom: '3px solid transparent',
+                    transition: 'color 0.2s ease, border-color 0.2s ease',
+                    '&:hover': { color: '#FFFFFF' },
+                    '&.active': {
+                      color: '#FFFFFF',
+                      fontWeight: 700,
+                      borderBottomColor: 'var(--color-primary)',
+                    },
+                  }}
+                >
+                  {item.label}
+                </Box>
               </Box>
-            </Box>
-          ))}
+            ))}
+          </Box>
+
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, alignItems: 'center', pl: 1.5, ml: 0.5, borderLeft: '1px solid rgba(255, 255, 255, 0.2)' }}>
+            <SnsLinks color="#FFFFFF" />
+          </Box>
         </Box>
       </Container>
     </Box>

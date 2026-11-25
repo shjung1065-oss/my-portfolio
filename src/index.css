@@ -35,6 +35,12 @@
 
   /* 연두 버튼 위 글자색 (명도 대비 확보용) */
   --color-on-primary: #FFFFFF;
+
+  /* Contact · 방명록 영역 (웜 아이보리 + 딥 네이비 포인트) */
+  --color-ivory: #FAF6EE;
+  --color-ivory-line: #E8E0D0;
+  --color-navy: #1F2A44;
+  --color-on-navy: #FFFFFF;
 }
 
 /* 시스템 다크모드 자동 적용 (수동으로 light를 고르면 제외) */
@@ -57,6 +63,10 @@
     --color-border: #33383F;
     --gradient-hero: linear-gradient(90deg, #3A2E26 0%, #3A2C2A 30%, #252D3D 100%);
     --color-on-primary: #16191D;
+    --color-ivory: #1E1C18;
+    --color-ivory-line: #35312A;
+    --color-navy: #A9B8D8;
+    --color-on-navy: #14181F;
   }
 }
 
@@ -79,6 +89,10 @@
   --color-border: #33383F;
   --gradient-hero: linear-gradient(90deg, #3A2E26 0%, #3A2C2A 30%, #252D3D 100%);
   --color-on-primary: #16191D;
+  --color-ivory: #1E1C18;
+  --color-ivory-line: #35312A;
+  --color-navy: #A9B8D8;
+  --color-on-navy: #14181F;
 }
 
 /* 모바일: 히어로 그라데이션을 세로로 */

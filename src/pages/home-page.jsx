@@ -1,5 +1,8 @@
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Stack from '@mui/material/Stack';
 
+import ContactSection from '../components/contact/contact-section.jsx';
 import SectionCard from '../components/ui/section-card.jsx';
 
 const HOME_SECTIONS = [
@@ -24,12 +27,9 @@ const HOME_SECTIONS = [
     title: 'Projects',
     description: '여기는 Projects 섹션입니다. 대표작 썸네일 3-4개와 \'더 보기\' 버튼이 들어갈 예정입니다.',
   },
-  {
-    id: 'contact',
-    title: 'Contact',
-    description: '여기는 Contact 섹션입니다. 연락처, SNS, 간단한 메시지 폼이 들어갈 예정입니다.',
-  },
 ];
+
+const toSectionLabel = (index) => `SECTION ${String(index + 1).padStart(2, '0')}`;
 
 /**
  * HomePage 컴포넌트
@@ -42,18 +42,27 @@ const HOME_SECTIONS = [
  * <HomePage />
  */
 function HomePage() {
+  const { hash } = useLocation();
+
+  /** 푸터의 '방명록 남기기'(/#contact)처럼 해시로 들어오면 해당 섹션으로 스크롤 */
+  useEffect(() => {
+    if (!hash) return;
+    document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: 'smooth' });
+  }, [hash]);
+
   return (
     <Stack spacing={{ xs: 2, md: 3 }}>
       {HOME_SECTIONS.map((section, index) => (
         <SectionCard
           key={ section.id }
           id={ section.id }
-          label={ `SECTION ${String(index + 1).padStart(2, '0')}` }
+          label={ toSectionLabel(index) }
           title={ section.title }
           description={ section.description }
           isHero={ section.isHero }
         />
       ))}
+      <ContactSection label={ toSectionLabel(HOME_SECTIONS.length) } />
     </Stack>
   );
 }
