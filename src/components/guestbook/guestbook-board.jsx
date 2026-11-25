@@ -78,13 +78,25 @@ function GuestbookBoard() {
     scrollToBoard();
   };
 
+  /** 삭제 후: 목록으로 돌아가 새로 불러오기 */
+  const handleDeleted = () => {
+    setSelectedId(null);
+    setReloadKey((key) => key + 1);
+    scrollToBoard();
+  };
+
   const pageCount = Math.max(1, Math.ceil(listState.total / PAGE_SIZE));
 
   if (selectedId !== null) {
     return (
       <Box ref={ boardRef } sx={{ scrollMarginTop: 80 }}>
         <Box sx={ subTitleSx }>방명록</Box>
-        <GuestbookDetail entryId={ selectedId } onNavigate={ openDetail } onBack={ closeDetail } />
+        <GuestbookDetail
+          entryId={ selectedId }
+          onNavigate={ openDetail }
+          onBack={ closeDetail }
+          onDeleted={ handleDeleted }
+        />
       </Box>
     );
   }

@@ -59,11 +59,13 @@ export async function fetchGuestbookEntry(id) {
 
 /**
  * 방명록을 작성합니다. (insert 후 결과를 다시 읽지 않음 → 실명 · 전화번호 · 이메일 노출 없음)
- * @param {{ name: string, phone: string, email: string, affiliation: string, title: string, message: string }} form
+ * - 비밀번호는 DB 트리거에서 bcrypt 해시로 변환되어 저장됩니다.
+ * @param {{ name: string, phone: string, email: string, affiliation: string, title: string, message: string, password: string }} form
  */
-export async function createGuestbookEntry({ name, phone, email, affiliation, title, message }) {
+export async function createGuestbookEntry({ name, phone, email, affiliation, title, message, password }) {
   const { error } = await supabase.from('guestbook').insert({
     name: name.trim(),
+    password,
     title: title.trim(),
     phone: phone.trim() || null,
     email: email.trim() || null,
@@ -71,4 +73,20 @@ export async function createGuestbookEntry({ name, phone, email, affiliation, ti
     message: message.trim(),
   });
   if (error) throw error;
+}
+
+/**
+ * 방명록을 삭제합니다. 작성자 비밀번호 또는 관리자 비밀번호가 맞아야 삭제됩니다.
+ * - 비밀번호 확인과 삭제는 DB 함수(delete_guestbook_entry) 안에서만 처리됩니다.
+ * @param {number} id
+ * @param {string} password
+ * @returns {Promise<boolean>} 삭제 성공 여부 (비밀번호 불일치 시 false)
+ */
+export async function deleteGuestbookEntry(id, password) {
+  const { data, error } = await supabase.rpc('delete_guestbook_entry', {
+    p_id: id,
+    p_password: password,
+  });
+  if (error) throw error;
+  return data === true;
 }

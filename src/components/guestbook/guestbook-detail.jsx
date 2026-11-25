@@ -5,8 +5,10 @@ import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 
+import GuestbookDeleteDialog from './guestbook-delete-dialog.jsx';
 import { fetchGuestbookEntry } from '../../utils/guestbook-api.js';
 import { formatDate } from '../../utils/format-date.js';
 
@@ -26,18 +28,21 @@ const navButtonSx = {
  * GuestbookDetail 컴포넌트
  *
  * 방명록 한 건을 보여주고, 하단에 이전 글 · 목록으로 · 다음 글 버튼을 크게 배치합니다.
+ * 본문 아래 '삭제' 버튼으로 작성자 또는 관리자가 비밀번호를 입력해 글을 지울 수 있습니다.
  *
  * Props:
  * @param {number} entryId - 보여줄 방명록 번호 [Required]
  * @param {function} onNavigate - 이전/다음 글로 이동할 때 호출 (id: number) [Required]
  * @param {function} onBack - 목록으로 돌아갈 때 호출 [Required]
+ * @param {function} onDeleted - 글이 삭제된 뒤 호출 [Required]
  *
  * Example usage:
- * <GuestbookDetail entryId={ 3 } onNavigate={ setId } onBack={ closeDetail } />
+ * <GuestbookDetail entryId={ 3 } onNavigate={ setId } onBack={ closeDetail } onDeleted={ handleDeleted } />
  */
-function GuestbookDetail({ entryId, onNavigate, onBack }) {
+function GuestbookDetail({ entryId, onNavigate, onBack, onDeleted }) {
   /** 응답을 요청한 글 번호(id)와 함께 저장 → 번호가 다르면 아직 로딩 중으로 판단 */
   const [response, setResponse] = useState({ id: null, data: null, hasError: false });
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
   useEffect(() => {
     let isActive = true;
@@ -112,6 +117,28 @@ function GuestbookDetail({ entryId, onNavigate, onBack }) {
           >
             {entry.message}
           </Box>
+        </Box>
+      )}
+
+      {entry && (
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1.5 }}>
+          <Button
+            size="small"
+            startIcon={ <DeleteOutlineIcon /> }
+            onClick={ () => setIsDeleteOpen(true) }
+            sx={{ color: 'var(--color-text-muted)', '&:hover': { color: 'error.main', bgcolor: 'transparent' } }}
+          >
+            삭제
+          </Button>
+          <GuestbookDeleteDialog
+            entryId={ entry.id }
+            isOpen={ isDeleteOpen }
+            onClose={ () => setIsDeleteOpen(false) }
+            onDeleted={ () => {
+              setIsDeleteOpen(false);
+              onDeleted();
+            } }
+          />
         </Box>
       )}
 

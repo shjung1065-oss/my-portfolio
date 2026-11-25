@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField';
 
 import { createGuestbookEntry } from '../../utils/guestbook-api.js';
 
-const EMPTY_FORM = { name: '', phone: '', email: '', affiliation: '', title: '', message: '' };
+const EMPTY_FORM = { name: '', phone: '', email: '', affiliation: '', title: '', message: '', password: '' };
 const EMAIL_PATTERN = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 const PHONE_PATTERN = /^[0-9-]{9,13}$/;
 
@@ -19,7 +19,7 @@ const fieldSx = {
 /**
  * GuestbookForm 컴포넌트
  *
- * 방명록 작성 폼입니다. 이름 · 제목 · 내용은 필수, 소속 · 전화번호 · 이메일은 선택(비공개)입니다.
+ * 방명록 작성 폼입니다. 이름 · 제목 · 내용 · 비밀번호는 필수, 소속 · 전화번호 · 이메일은 선택(비공개)입니다.
  *
  * Props:
  * @param {function} onCreated - 작성 성공 후 호출되는 함수 [Optional]
@@ -34,7 +34,9 @@ function GuestbookForm({ onCreated }) {
 
   const isEmailInvalid = form.email.trim() !== '' && !EMAIL_PATTERN.test(form.email.trim());
   const isPhoneInvalid = form.phone.trim() !== '' && !PHONE_PATTERN.test(form.phone.trim());
-  const canSubmit = form.name.trim() && form.title.trim() && form.message.trim() && !isEmailInvalid && !isPhoneInvalid && !isSubmitting;
+  const isPasswordInvalid = form.password !== '' && (form.password.length < 4 || form.password.length > 20);
+  const canSubmit = form.name.trim() && form.title.trim() && form.message.trim()
+    && form.password && !isPasswordInvalid && !isEmailInvalid && !isPhoneInvalid && !isSubmitting;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -137,6 +139,20 @@ function GuestbookForm({ onCreated }) {
         slotProps={{ htmlInput: { maxLength: 1000 } }}
         helperText={ `${form.message.length} / 1000` }
         sx={ fieldSx }
+      />
+
+      <TextField
+        label="비밀번호"
+        name="password"
+        type="password"
+        value={ form.password }
+        onChange={ handleChange }
+        required
+        error={ isPasswordInvalid }
+        autoComplete="new-password"
+        slotProps={{ htmlInput: { maxLength: 20 } }}
+        helperText={ isPasswordInvalid ? '4~20자로 입력해 주세요' : '글을 삭제할 때 필요해요 (4~20자)' }
+        sx={{ ...fieldSx, maxWidth: { sm: 320 } }}
       />
 
       {feedback && <Alert severity={ feedback.severity }>{feedback.text}</Alert>}
