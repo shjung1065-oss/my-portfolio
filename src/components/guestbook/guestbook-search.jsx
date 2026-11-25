@@ -8,7 +8,7 @@ import SearchIcon from '@mui/icons-material/Search';
 /**
  * GuestbookSearch 컴포넌트
  *
- * 작성자 · 소속 · 내용을 한 번에 검색하는 입력창입니다.
+ * 작성자 · 내용을 한 번에 검색하는 입력창입니다.
  *
  * Props:
  * @param {string} initialKeyword - 처음 표시할 검색어 [Optional, 기본값: '']
@@ -35,7 +35,7 @@ function GuestbookSearch({ initialKeyword = '', onSearch }) {
       <TextField
         value={ value }
         onChange={ (event) => setValue(event.target.value) }
-        placeholder="작성자, 소속, 내용으로 검색"
+        placeholder="작성자, 내용으로 검색"
         size="small"
         fullWidth
         slotProps={{

@@ -79,9 +79,6 @@ function GuestbookDetail({ entryId, onNavigate, onBack }) {
             <Box sx={{ color: 'var(--color-text-primary)', fontWeight: 700, fontSize: '1.05rem' }}>
               {entry.display_name}
             </Box>
-            {entry.affiliation && (
-              <Box sx={{ color: 'var(--color-text-secondary)', fontSize: '0.9rem' }}>{entry.affiliation}</Box>
-            )}
             <Box sx={{ ml: 'auto', color: 'var(--color-text-muted)', fontSize: '0.85rem' }}>
               No.{entry.id} · {formatDate(entry.created_at)}
             </Box>

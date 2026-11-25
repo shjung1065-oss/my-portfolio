@@ -59,9 +59,7 @@ function GuestbookList({ entries, onSelect }) {
                 {entry.message}
               </Box>
               <Box sx={{ mt: 0.5, color: 'var(--color-text-muted)', fontSize: '0.8rem' }}>
-                {entry.display_name}
-                {entry.affiliation && ` · ${entry.affiliation}`}
-                {` · ${formatDate(entry.created_at)}`}
+                {`${entry.display_name} · ${formatDate(entry.created_at)}`}
               </Box>
             </Box>
           </ButtonBase>

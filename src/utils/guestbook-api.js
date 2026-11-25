@@ -1,7 +1,7 @@
 import { supabase } from '../lib/supabase.js';
 
-/** 공개 가능한 컬럼만 조회합니다. (실명 name · email 은 DB 권한상 읽을 수 없음) */
-const PUBLIC_COLUMNS = 'id, display_name, affiliation, message, created_at';
+/** 공개 가능한 컬럼만 조회합니다. (실명 · 전화번호 · 이메일 · 소속은 DB 권한상 읽을 수 없음) */
+const PUBLIC_COLUMNS = 'id, display_name, message, created_at';
 
 export const PAGE_SIZE = 10;
 
@@ -11,7 +11,7 @@ function sanitizeKeyword(keyword) {
 }
 
 /**
- * 방명록 목록을 가져옵니다. 키워드가 있으면 작성자 · 소속 · 내용에서 검색합니다.
+ * 방명록 목록을 가져옵니다. 키워드가 있으면 작성자 · 내용에서 검색합니다.
  * @param {{ page: number, keyword: string }} options
  * @returns {Promise<{ entries: Array, total: number }>}
  */
@@ -26,9 +26,7 @@ export async function fetchGuestbookEntries({ page = 1, keyword = '' }) {
   const safeKeyword = sanitizeKeyword(keyword);
   if (safeKeyword) {
     const pattern = `%${safeKeyword}%`;
-    query = query.or(
-      `display_name.ilike.${pattern},affiliation.ilike.${pattern},message.ilike.${pattern}`,
-    );
+    query = query.or(`display_name.ilike.${pattern},message.ilike.${pattern}`);
   }
 
   const { data, error, count } = await query;

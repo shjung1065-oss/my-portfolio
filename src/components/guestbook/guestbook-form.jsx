@@ -80,7 +80,7 @@ function GuestbookForm({ onCreated }) {
           onChange={ handleChange }
           fullWidth
           slotProps={{ htmlInput: { maxLength: 50 } }}
-          helperText="선택 · 회사, 학교 등"
+          helperText="선택 · 회사, 학교 등 (비공개)"
           sx={ fieldSx }
         />
       </Box>
@@ -112,7 +112,7 @@ function GuestbookForm({ onCreated }) {
         />
       </Box>
       <Box sx={{ mt: -1, color: 'var(--color-text-muted)', fontSize: '0.8rem', lineHeight: 1.5 }}>
-        전화번호와 이메일은 공개되지 않아요. 답장이 필요할 때 사이트 주인만 확인하고 연락드려요.
+        소속/직업, 전화번호, 이메일은 공개되지 않아요. 사이트 주인만 확인하고, 답장이 필요할 때 연락드려요.
       </Box>
       <TextField
         label="남기실 말"
