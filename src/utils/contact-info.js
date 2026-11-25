@@ -4,9 +4,8 @@
  * - SNS 를 추가하려면 SNS_LINKS 에 항목을, sns-links.jsx 의 SNS_ICONS 에 아이콘을 넣어 주세요.
  */
 export const CONTACT_INFO = {
-  // TODO: 실제 전화번호와 이메일로 바꿔 주세요.
-  phone: '010-0000-0000',
-  email: 'hello@example.com',
+  phone: '010-1224-1234',
+  email: 'yong@naver.com',
 };
 
 export const SNS_LINKS = [
