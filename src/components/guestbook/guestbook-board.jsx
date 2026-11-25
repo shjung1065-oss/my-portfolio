@@ -90,7 +90,7 @@ function GuestbookBoard() {
 
   return (
     <Box ref={ boardRef } sx={{ display: 'flex', flexDirection: 'column', gap: { xs: 4, md: 5 }, scrollMarginTop: 80 }}>
-      <Box>
+      <Box id="guestbook-form" sx={{ scrollMarginTop: 80 }}>
         <Box sx={ subTitleSx }>방명록 남기기</Box>
         <GuestbookForm onCreated={ handleCreated } />
       </Box>

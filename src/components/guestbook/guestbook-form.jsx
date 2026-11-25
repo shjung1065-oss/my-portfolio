@@ -6,8 +6,9 @@ import TextField from '@mui/material/TextField';
 
 import { createGuestbookEntry } from '../../utils/guestbook-api.js';
 
-const EMPTY_FORM = { name: '', email: '', affiliation: '', message: '' };
+const EMPTY_FORM = { name: '', phone: '', email: '', affiliation: '', message: '' };
 const EMAIL_PATTERN = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+const PHONE_PATTERN = /^[0-9-]{9,13}$/;
 
 const fieldSx = {
   '& .MuiOutlinedInput-root': { bgcolor: 'var(--color-bg-primary)' },
@@ -32,7 +33,8 @@ function GuestbookForm({ onCreated }) {
   const [feedback, setFeedback] = useState(null);
 
   const isEmailInvalid = form.email.trim() !== '' && !EMAIL_PATTERN.test(form.email.trim());
-  const canSubmit = form.name.trim() && form.message.trim() && !isEmailInvalid && !isSubmitting;
+  const isPhoneInvalid = form.phone.trim() !== '' && !PHONE_PATTERN.test(form.phone.trim());
+  const canSubmit = form.name.trim() && form.message.trim() && !isEmailInvalid && !isPhoneInvalid && !isSubmitting;
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -82,18 +84,36 @@ function GuestbookForm({ onCreated }) {
           sx={ fieldSx }
         />
       </Box>
-      <TextField
-        label="이메일"
-        name="email"
-        type="email"
-        value={ form.email }
-        onChange={ handleChange }
-        fullWidth
-        error={ isEmailInvalid }
-        slotProps={{ htmlInput: { maxLength: 100 } }}
-        helperText={ isEmailInvalid ? '이메일 형식을 확인해 주세요' : '선택 · 공개되지 않고 답장할 때만 사용해요' }
-        sx={ fieldSx }
-      />
+      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 2 }}>
+        <TextField
+          label="전화번호"
+          name="phone"
+          type="tel"
+          value={ form.phone }
+          onChange={ handleChange }
+          fullWidth
+          error={ isPhoneInvalid }
+          placeholder="010-1234-5678"
+          slotProps={{ htmlInput: { maxLength: 13, inputMode: 'tel' } }}
+          helperText={ isPhoneInvalid ? '숫자와 - 만 입력해 주세요' : '선택' }
+          sx={ fieldSx }
+        />
+        <TextField
+          label="이메일"
+          name="email"
+          type="email"
+          value={ form.email }
+          onChange={ handleChange }
+          fullWidth
+          error={ isEmailInvalid }
+          slotProps={{ htmlInput: { maxLength: 100 } }}
+          helperText={ isEmailInvalid ? '이메일 형식을 확인해 주세요' : '선택' }
+          sx={ fieldSx }
+        />
+      </Box>
+      <Box sx={{ mt: -1, color: 'var(--color-text-muted)', fontSize: '0.8rem', lineHeight: 1.5 }}>
+        전화번호와 이메일은 공개되지 않아요. 답장이 필요할 때 사이트 주인만 확인하고 연락드려요.
+      </Box>
       <TextField
         label="남기실 말"
         name="message"

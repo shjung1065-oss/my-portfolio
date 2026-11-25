@@ -1,14 +1,13 @@
-import { Link as RouterLink } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 
-import ContactIconButtons from './contact-icon-buttons.jsx';
+import GuestbookLinkButton from './guestbook-link-button.jsx';
 import SnsLinks from './sns-links.jsx';
 
 /**
  * SiteFooter 컴포넌트
  *
- * 모든 페이지 하단에 고정으로 붙는 푸터입니다. 전화 · 메일 아이콘 버튼과 SNS 아이콘을 한 줄로 배치합니다.
+ * 모든 페이지 하단에 고정으로 붙는 푸터입니다. 방명록 문의 버튼과 SNS 아이콘을 한 줄로 배치합니다.
  *
  * Props: 없음
  *
@@ -39,24 +38,15 @@ function SiteFooter() {
       >
         <Box>
           <Box sx={{ color: 'var(--color-text-primary)', fontWeight: 700, fontSize: '0.95rem' }}>
-            문의 · 연락처
+            문의
           </Box>
-          <Box
-            component={ RouterLink }
-            to="/#contact"
-            sx={{
-              color: 'var(--color-text-muted)',
-              fontSize: '0.85rem',
-              textDecoration: 'none',
-              '&:hover': { color: 'var(--color-navy)', textDecoration: 'underline' },
-            }}
-          >
-            방명록 남기기
+          <Box sx={{ color: 'var(--color-text-muted)', fontSize: '0.85rem' }}>
+            방명록에 남겨 주시면 확인 후 연락드려요.
           </Box>
         </Box>
 
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-          <ContactIconButtons />
+          <GuestbookLinkButton size="small" />
           <Box sx={{ width: '1px', height: 20, bgcolor: 'var(--color-ivory-line)' }} />
           <SnsLinks color="var(--color-text-secondary)" />
         </Box>

@@ -56,12 +56,13 @@ export async function fetchGuestbookEntry(id) {
 }
 
 /**
- * 방명록을 작성합니다. (insert 후 결과를 다시 읽지 않음 → 실명 · 이메일 노출 없음)
- * @param {{ name: string, email: string, affiliation: string, message: string }} form
+ * 방명록을 작성합니다. (insert 후 결과를 다시 읽지 않음 → 실명 · 전화번호 · 이메일 노출 없음)
+ * @param {{ name: string, phone: string, email: string, affiliation: string, message: string }} form
  */
-export async function createGuestbookEntry({ name, email, affiliation, message }) {
+export async function createGuestbookEntry({ name, phone, email, affiliation, message }) {
   const { error } = await supabase.from('guestbook').insert({
     name: name.trim(),
+    phone: phone.trim() || null,
     email: email.trim() || null,
     affiliation: affiliation.trim() || null,
     message: message.trim(),

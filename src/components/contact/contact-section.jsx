@@ -1,14 +1,14 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-import ContactIconButtons from '../common/contact-icon-buttons.jsx';
+import GuestbookLinkButton from '../common/guestbook-link-button.jsx';
 import SnsLinks from '../common/sns-links.jsx';
 import GuestbookBoard from '../guestbook/guestbook-board.jsx';
 
 /**
  * ContactSection 컴포넌트
  *
- * Home 탭의 Contact 섹션입니다. 인사말 → 문의(전화 · 메일 · SNS) → 방명록 순서로 세로 배치합니다.
+ * Home 탭의 Contact 섹션입니다. 인사말 → 문의(방명록 바로가기 · SNS) → 방명록 순서로 세로 배치합니다.
  *
  * Props:
  * @param {string} label - 상단 섹션 번호 텍스트 (예: 'SECTION 05') [Required]
@@ -77,8 +77,11 @@ function ContactSection({ label }) {
         <Box sx={{ mb: 2, color: 'var(--color-text-primary)', fontWeight: 700, fontSize: { xs: '1rem', md: '1.1rem' } }}>
           문의
         </Box>
-        <ContactIconButtons isLabeled />
-        <Box sx={{ mt: 2, ml: -0.5 }}>
+        <Box sx={{ mb: 2, color: 'var(--color-text-secondary)', fontSize: { xs: '0.95rem', md: '1rem' }, lineHeight: 1.6 }}>
+          문의는 방명록으로 남겨 주세요. 연락처를 함께 적어 주시면 확인 후 직접 연락드릴게요.
+        </Box>
+        <Box sx={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 1.5 }}>
+          <GuestbookLinkButton size="large" />
           <SnsLinks color="var(--color-text-secondary)" />
         </Box>
       </Box>
