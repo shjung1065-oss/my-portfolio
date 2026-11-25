@@ -14,12 +14,11 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
+# 빌드와 배포를 별도 job 으로 분리 (GitHub 공식 권장 구조)
+# → 업로드한 결과물이 등록된 뒤에 배포 job 이 시작되어 "artifact 없음" 오류를 줄임
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -44,6 +43,14 @@ jobs:
         uses: actions/upload-pages-artifact@v5
         with:
           path: './dist'
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
