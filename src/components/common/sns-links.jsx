@@ -1,15 +1,11 @@
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import GitHubIcon from '@mui/icons-material/GitHub';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import EditNoteOutlinedIcon from '@mui/icons-material/EditNoteOutlined';
 
 import { SNS_LINKS } from '../../utils/contact-info.js';
 
 const SNS_ICONS = {
   github: GitHubIcon,
-  instagram: InstagramIcon,
-  blog: EditNoteOutlinedIcon,
 };
 
 /**
