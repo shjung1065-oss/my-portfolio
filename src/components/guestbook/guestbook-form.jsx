@@ -10,6 +10,20 @@ const EMPTY_FORM = { name: '', phone: '', email: '', affiliation: '', title: '',
 const EMAIL_PATTERN = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 const PHONE_PATTERN = /^[0-9-]{9,13}$/;
 
+/**
+ * 등록 실패 원인을 사용자에게 보여줄 문구로 바꿉니다.
+ * - 22023: DB 트리거가 보낸 한글 안내 (예: 비밀번호 길이)
+ * - 23514: DB 입력 규칙(check) 위반
+ * @param {{ code?: string, message?: string }} error
+ * @returns {string}
+ */
+function getSubmitErrorText(error) {
+  const refreshHint = ' 화면이 오래된 버전일 수 있으니 새로고침(Ctrl+F5) 후 다시 시도해 주세요.';
+  if (error?.code === '22023' && error.message) return `${error.message}${refreshHint}`;
+  if (error?.code === '23514') return `입력 형식을 확인해 주세요.${refreshHint}`;
+  return `등록하지 못했어요.${refreshHint}`;
+}
+
 const fieldSx = {
   '& .MuiOutlinedInput-root': { bgcolor: 'var(--color-bg-primary)' },
   '& .MuiOutlinedInput-root.Mui-focused fieldset': { borderColor: 'var(--color-navy)' },
@@ -54,8 +68,8 @@ function GuestbookForm({ onCreated }) {
       setForm(EMPTY_FORM);
       setFeedback({ severity: 'success', text: '방명록이 등록됐어요. 남겨 주셔서 고마워요!' });
       onCreated?.();
-    } catch {
-      setFeedback({ severity: 'error', text: '등록하지 못했어요. 잠시 후 다시 시도해 주세요.' });
+    } catch (error) {
+      setFeedback({ severity: 'error', text: getSubmitErrorText(error) });
     } finally {
       setIsSubmitting(false);
     }
