@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 
 import GuestbookDeleteDialog from './guestbook-delete-dialog.jsx';
@@ -124,7 +124,7 @@ function GuestbookDetail({ entryId, onNavigate, onBack, onDeleted }) {
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1.5 }}>
           <Button
             size="small"
-            startIcon={ <DeleteOutlineIcon /> }
+            startIcon={ <DeleteOutlinedIcon /> }
             onClick={ () => setIsDeleteOpen(true) }
             sx={{ color: 'var(--color-text-muted)', '&:hover': { color: 'error.main', bgcolor: 'transparent' } }}
           >
